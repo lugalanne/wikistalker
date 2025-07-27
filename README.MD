@@ -21,7 +21,7 @@ Track every change on articles connected to important people, organizations, or 
    ```bash
    git clone https://github.com/lugalanne/wikistalker.git
    cd wikistalker
-````
+```
 
 2. **Install dependencies:**
 
