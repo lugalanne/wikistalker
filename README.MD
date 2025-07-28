@@ -55,12 +55,12 @@ Follow the menu prompts to:
 ### 2. **Direct command-line usage:**
 
 ```bash
-python wikistalker.py --wikis en,de,ru --titles titles.txt --database edits.db --env mybot.env
+python wikistalker.py --wikies en,de,ru --titles titles.txt --database edits.db --env mybot.env
 ```
 
 **Arguments:**
 
-* `--wikis`: Comma-separated list of language codes (e.g., `en,ru,uk`).
+* `--wikies`: Comma-separated list of language codes (e.g., `en,ru,uk`).
 * `--titles`: Path to a file listing article titles to monitor (one per line).
   Leave this blank or set `None` to monitor **all** articles.
 * `--database`: Path to SQLite DB for storing edits.
