@@ -1,0 +1,8 @@
+aiohttp
+aiosqlite 
+argparse
+dotenv
+logging
+rich
+psutil
+requests
