@@ -15,19 +15,23 @@ def start():
     console.print('1. Create new listener')
     console.print('2. Start listener')
     console.print('3. Show running listeners')   
-    console.print("4. Collect list of article titles")
-    console.print('5. Exit (without closing active listeners)')
+    console.print("4. Collect list of article titles") 
+    console.print('5. Collect list of titles for multiple QIDs')
+    console.print('6. Exit (without terminating active listeners)')
     console.print('\n')
 start()
 
 def GetTitlesfromQID(qid,langset=('en','de','fr','es','it','ru','uk')):
     url = f"https://www.wikidata.org/wiki/Special:EntityData/{qid}.json"
     resp = requests.get(url)
-    data = resp.json()
-    entity = data['entities'][qid]
-    sitelinks = entity['sitelinks']
-    titles = [j['title'] for i,j in sitelinks.items() if i.endswith('wiki') and i[0:2] in langset]
-    return titles
+    try: 
+        data = resp.json() 
+        entity = data['entities'][qid]
+        sitelinks = entity['sitelinks']
+        titles = [j['title'] for i,j in sitelinks.items() if i.endswith('wiki') and i[0:2] in langset]  
+        return titles
+    except ValueError:
+        print(f'JSON Error with {qid} ')
 
 def GetQIDConnections(qid):
     url = f"https://www.wikidata.org/wiki/Special:EntityData/{qid}.json"
@@ -97,7 +101,7 @@ while if_exit != True:
         name = console.input('Enter filename to save the list: ')
         WriteTitlesToFile(them_all, name)
         start()
-    elif opt == '5':
+    elif opt == '6':
         if_exit = True
     elif opt == '1':
         start()
@@ -178,5 +182,34 @@ while if_exit != True:
         else:
             console.clear()
             start()
+    elif opt == '5':
+        i = input('Enter path to the list of QIDs (txt/list): ')
+        try:
+            list_qids = open(i,'r').readlines()
+        except OSError:
+            print('Incorrect file')
+        yy = input('Add QIDs connections before getting titles? (y/n)')        
+        qids_conn = []
+        results = []
+        if yy.lower() == 'y':
+            with Progress() as progress_bar:
+                task = progress_bar.add_task("[cyan]Processing QIDs...",total=len(list_qids))
+                for i in list_qids:
+                    rr = GetQIDConnections(i.replace('\n',''))
+                    qids_conn.extend(rr)
+                    progress_bar.advance(task,1)
+                task = progress_bar.add_task("[cyan]Extrackting titles from QIDs...",total=len(qids_conn))
+                for y in qids_conn:
+                    rr = GetTitlesfromQID(y) 
+                    progress_bar.advance(task,1)
+                    if rr != None:
+                        results.extend(rr)
+        else:
+            for i in list_qids:
+                rr = GetTitlesfromQID(i.replace('\n',''))
+                results.extend(rr)
+        outtitle = input('Save them as: ')
+        start()
+        WriteTitlesToFile(results,outtitle)
     else:
         console.print("Incorrect option")

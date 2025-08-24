@@ -120,7 +120,7 @@ Suppose you want to track all Wikipedia edits related to **Vladimir Putin** (Q77
 
 ## Roadmap & Known Issues
 
-* [ ] Making connected entities for list of QIDs
+* [X] Making connected entities for list of QIDs
 * [ ] WikiData properties optimization
 * [ ] Refactoring spaghetti code
 * [ ] Config file editor in menu
@@ -146,3 +146,4 @@ Pull requests are welcome! Please open an issue first if you’d like to discuss
 ---
 
 *WikiStalker is not affiliated with Wikimedia Foundation.*
+
