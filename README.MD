@@ -7,7 +7,7 @@ Track every change on articles connected to important people, organizations, or 
 ## Features
 
 - Real-time Wikipedia edit monitoring via EventStream API
-- Track by article titles, or automatically collect all articles linked to a Wikidata QID
+- Track by article titles, or automatically collect all articles linked to a specified Wikidata QID. Parsing properties can be configured in props.txt. For Wikidata properties, see: https://hay.toolforge.org/propbrowse/
 - Optional Telegram alerts for new edits
 - Optional SQLite database logging (with full diffs and metadata)
 - Interactive menu for creating and managing listeners
